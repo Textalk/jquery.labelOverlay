@@ -16,7 +16,7 @@ $.fn.overlayValue = function(options) {
 
   if (typeof related_label !== 'undefined') {
     var related_input = 'input[name="' + $(label).attr('for') + '"]';
-    $(input).focus(function() {
+    $(input).change(function() {
       interval_check = setInterval(
        function() {
           if ($(related_input).val() !== '') $(related_label).hide();
@@ -26,7 +26,7 @@ $.fn.overlayValue = function(options) {
     });
 
     $(input).blur(function() {
-      clearInterval(interval_check)
+      clearInterval(interval_check);
     });
   }
 
