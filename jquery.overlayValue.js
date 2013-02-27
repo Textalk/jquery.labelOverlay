@@ -20,6 +20,7 @@ $.fn.overlayValue = function(options) {
       interval_check = setInterval(
        function() {
           if ($(related_input).val() !== '') $(related_label).hide();
+          else $(related_label).show();
         },
         100
       );
