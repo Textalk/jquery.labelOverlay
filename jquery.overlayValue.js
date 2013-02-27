@@ -15,7 +15,7 @@ $.fn.overlayValue = function(options) {
   if (css_class) $(label).addClass(css_class);
 
   if (typeof related_label !== 'undefined') {
-    var related_input = 'input[name="' + $(label).attr('for') + '"]';
+    var related_input = 'input[name="' + $(related_label).attr('for') + '"]';
     $(input).change(function() {
       interval_check = setInterval(
        function() {
