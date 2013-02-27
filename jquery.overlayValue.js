@@ -16,11 +16,10 @@ $.fn.overlayValue = function(options) {
 
   if (typeof related_label !== 'undefined') {
     var related_input = 'input[name="' + $(related_label).attr('for') + '"]';
-    $(input).change(function() {
+    $(related_input).change(function() {
       interval_check = setInterval(
        function() {
           if ($(related_input).val() !== '') $(related_label).hide();
-          else $(related_label).show();
         },
         100
       );
