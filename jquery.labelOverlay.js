@@ -15,7 +15,6 @@
       interval_check = function() {
         if (input.val() !== '') {
           label.hide();
-          console.log('sadfasdfasdf');
         }
       }
 
