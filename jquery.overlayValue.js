@@ -1,47 +1,48 @@
 /**
- * Options:
- *  css_class: css class to bind on labels.
- *  related_label
+ * Simple label overlay plugin to make labels act as a default value to input
+ * element. It will hide itself when users want to enter text but reappear if
+ * input has no value. It will also vanish if another input field triggers
  */
-$.fn.overlayValue = function(options) {
-  var label = this;
-  var input = 'input[name="' + $(label).attr('for') + '"]';
+(function($){
+  $.fn.labelOverlay = function(options) {
+    var labelclass;
+    if (typeof options.class !== 'undefined') labelclass = options.class;
+    return this.each(function() {
+      var input = $('input[name="' + $(this).attr('for') + '"]');
+      var label = $(this);
+      label.addClass(labelclass);
 
-  // options
-  var css_class, css, related_label;
-  if (typeof options.css_class !== 'undefined') css_class = options.css_class;
-  if (typeof options.related_label !== 'undefined') related_label = options.related_label;
+      interval_check = function() {
+        if (input.val() !== '') {
+          label.hide();
+          console.log('sadfasdfasdf');
+        }
+      }
 
-  if (css_class) $(label).addClass(css_class);
-
-  if (typeof related_label !== 'undefined') {
-    var related_input = 'input[name="' + $(related_label).attr('for') + '"]';
-    $(related_input).change(function() {
-      interval_check = setInterval(
-       function() {
-          if ($(related_input).val() !== '') $(related_label).hide();
-        },
-        100
+      input.change(
+        function() {
+          if ($(this).val() === '') setInterval(interval_check, 100);
+          else clearInterval(interval_check);
+        }
       );
+
+      if (input.val() === '') {
+        label.show();
+      }
+      else {
+        label.hide();
+      }
+
+      input.focus(function() {
+        label.hide();
+      }).blur(function() {
+        if ($(this).val() === '') label.show();
+      });
+
+      label.click(function() {
+        $(this).hide();
+        input.focus();
+      });
     });
-
-    $(input).blur(function() {
-      clearInterval(interval_check);
-    });
-  }
-
-  if ($(input).val() === '') {
-    $(label).show();
-  }
-
-  $(input).focus(function() {
-    $(label).hide();
-  }).blur(function() {
-    if ($(this).val() === '') $(label).show();
-  });
-
-  $(label).click(function() {
-    $(label).hide();
-    $(input).focus();
-  });
-};
+  };
+})(jQuery);
